@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
+	"unicode/utf8"
 )
 
 func main() {
@@ -22,6 +24,14 @@ func main() {
 
 // ReverseString returns the reversed string of s.
 func ReverseString(s string) string {
-	// TODO: Implement the function
-	return ""
+	result := strings.Builder{}
+
+	for i, w := len(s), 0; i > 0; i -= w {
+		r, width := utf8.DecodeLastRuneInString(s[:i])
+		w = width
+
+		result.WriteRune(r)
+	}
+
+	return result.String()
 }
